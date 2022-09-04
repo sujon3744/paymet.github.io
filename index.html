@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="Style.css">
+    <title>Payment Method</title>
+</head>
+<body>
+    <div class="hero">
+        <form name="submit-to-google-sheet">
+            <div class="text-box">
+                <h1>Method</h1>
+            </div>
+            <span id="msg"></span><br>
+            <div class="input-group">
+                <input type="text" name="Name" id="Name" required>
+                <label for="Name"><i class="fa fa-user"></i> Your Name</label>
+            </div>
+            <div class="input-group">
+                <input type="number" name="Number" id="Number" required>
+                <label for="Number"><i class="fa fa-phone-square-alt"></i> Number</label>
+            </div>
+            <div class="input-group">
+                <input type="text" name="Method" id="Method" required>
+                <label for="Method"><i class="fa fa-money"></i> Method</label>
+            </div>
+            <div class="input-group">
+                <input type="number" name="Pin Code" id="Pin" required>
+                <label for="Pin"><i class="fa fa-thumb-tack"></i> Pin Number</label>
+            </div>
+            <button type="submit" id="button">SUBMIT <i class="fas fa-paper-plane"></i></button>
+            <button type="reset" id="button1">ALL CLEAR <i class="fa fa-trash"></i></button>
+        </form>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbx_OeQ1NrsHFM2PfaZTBD1FIGyrDn8TniFiVqYiCUvRGNdj6PWV2K-OCuNnrH4bLYwr/exec'
+        const form = document.forms['submit-to-google-sheet']
+        const msg = document.getElementById("msg")
+      
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                msg.innerHTML = "Payment Method Send Successfully"
+                setTimeout(function(){
+                    msg.innerHTML = ""
+                },5000)
+                form.reset()
+            })
+            .catch(error => console.error('Error!', error.message))
+        })
+      </script>
+
+</body>
+</html>
